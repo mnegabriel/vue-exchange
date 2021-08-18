@@ -6,3 +6,38 @@ export const currencyUsd =
 
 export const currencyEur =
     number => new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'EUR' }).format(number)
+
+export const maskToFloat = () => {
+    const numberRegex = {
+        notNumber: {
+            rgx: /[^\d\.]/g,
+            replacer: ''
+        },
+        floatingNumber: {
+            rgx: /(.*\..*)(\.)/g,
+            replacer: '$1'
+        },
+        removeZeros: {
+            rgx: /^0*/g,
+            replacer: ''
+        },
+        decimal: {
+            rgx: /(.*\..{0,2}).*/g,
+            replacer: '$1'
+        }
+    }
+
+    const regexValues = Object.values(numberRegex)
+
+    const runTest = string => regexValues.some(({ rgx }) => rgx.test(string))
+
+    const runMask = string => {
+        regexValues.forEach(({ rgx, replacer }) => {
+            string = string.replace(rgx, replacer)
+        })
+
+        return string
+    }
+
+    return [runTest, runMask]
+}

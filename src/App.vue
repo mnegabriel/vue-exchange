@@ -18,7 +18,7 @@
     <form class="text-center">
       <label for="amount">Valor</label>
       <input
-        type="text"
+        type="tel"
         id="amount"
         name="amount"
         v-model="value"
